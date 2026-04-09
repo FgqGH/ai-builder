@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>织网 — AI 建站，让想法秒变网站</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <!-- AOS CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #050507;
+      --surface: #0D0D12;
+      --border: rgba(255,255,255,0.07);
+      --text-primary: #FFFFFF;
+      --text-secondary: rgba(255,255,255,0.5);
+      --text-tertiary: rgba(255,255,255,0.3);
+      --accent: #3B82F6;
+      --accent-bright: #60A5FA;
+      --accent-glow: rgba(59,130,246,0.25);
+      --accent-2: #8B5CF6;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text-primary);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ========== NAV ========== */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 24px 64px;
+      background: rgba(5,5,7,0.8);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      color: var(--text-primary);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .nav-logo::before {
+      content: '';
+      display: inline-block;
+      width: 28px;
+      height: 28px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      border-radius: 8px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 40px;
+      align-items: center;
+    }
+
+    .nav-links a {
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover { color: var(--text-primary); }
+
+    .nav-cta {
+      font-size: 13px !important;
+      font-weight: 600 !important;
+      padding: 10px 24px;
+      background: var(--accent);
+      color: #fff !important;
+      border-radius: 8px;
+      transition: background 0.3s, transform 0.2s !important;
+    }
+
+    .nav-cta:hover {
+      background: var(--accent-bright) !important;
+      transform: translateY(-1px);
+    }
+
+    /* ========== HERO ========== */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 160px 24px 80px;
+      position: relative;
+    }
+
+    /* Ambient glow */
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 10%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 800px;
+      height: 600px;
+      background: radial-gradient(ellipse, rgba(59,130,246,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 20px;
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      margin-bottom: 48px;
+      background: rgba(59,130,246,0.05);
+    }
+
+    .hero-badge::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 8px var(--accent);
+    }
+
+    .hero h1 {
+      font-size: clamp(48px, 7vw, 96px);
+      font-weight: 900;
+      line-height: 1.0;
+      letter-spacing: -3px;
+      max-width: 900px;
+      margin-bottom: 28px;
+    }
+
+    .hero h1 .accent {
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero h1 .light {
+      font-weight: 300;
+      color: var(--text-secondary);
+    }
+
+    .hero p {
+      font-size: clamp(16px, 2vw, 20px);
+      color: var(--text-secondary);
+      max-width: 540px;
+      margin-bottom: 56px;
+      font-weight: 400;
+      line-height: 1.7;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 16px 40px;
+      background: var(--accent);
+      color: #fff;
+      font-size: 15px;
+      font-weight: 600;
+      font-family: 'Inter', sans-serif;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
+      text-decoration: none;
+    }
+
+    .btn-primary:hover {
+      background: var(--accent-bright);
+      transform: translateY(-2px);
+      box-shadow: 0 16px 40px var(--accent-glow);
+    }
+
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 16px 40px;
+      background: transparent;
+      color: var(--text-secondary);
+      font-size: 15px;
+      font-weight: 500;
+      font-family: 'Inter', sans-serif;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      cursor: pointer;
+      transition: border-color 0.3s, color 0.3s;
+      text-decoration: none;
+    }
+
+    .btn-ghost:hover {
+      border-color: rgba(255,255,255,0.2);
+      color: var(--text-primary);
+    }
+
+    /* ========== WORKFLOW ========== */
+    .workflow {
+      padding: 140px 64px;
+      position: relative;
+    }
+
+    .workflow-label {
+      text-align: center;
+      font-size: 12px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 16px;
+      font-weight: 600;
+    }
+
+    .workflow-title {
+      text-align: center;
+      font-size: clamp(32px, 4vw, 52px);
+      font-weight: 800;
+      letter-spacing: -1px;
+      margin-bottom: 80px;
+    }
+
+    .workflow-steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .step-card {
+      background: var(--surface);
+      padding: 48px 40px;
+      position: relative;
+      transition: background 0.3s;
+    }
+
+    .step-card:hover { background: rgba(13,13,18,0.8); }
+
+    .step-num {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: var(--accent);
+      margin-bottom: 32px;
+      font-family: 'Inter', monospace;
+    }
+
+    .step-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      background: rgba(59,130,246,0.1);
+      border: 1px solid rgba(59,130,246,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      margin-bottom: 24px;
+    }
+
+    .step-card h3 {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 14px;
+      letter-spacing: -0.3px;
+    }
+
+    .step-card p {
+      font-size: 14px;
+      line-height: 1.7;
+      color: var(--text-secondary);
+      font-weight: 400;
+    }
+
+    .step-arrow {
+      position: absolute;
+      right: -20px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-tertiary);
+      font-size: 20px;
+      z-index: 1;
+    }
+
+    .step-card:last-child .step-arrow { display: none; }
+
+    /* ========== STATS ========== */
+    .stats {
+      padding: 100px 64px;
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 48px;
+      max-width: 1000px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .stat-item h2 {
+      font-size: clamp(40px, 5vw, 68px);
+      font-weight: 900;
+      letter-spacing: -2px;
+      background: linear-gradient(135deg, #fff, rgba(255,255,255,0.6));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .stat-item p {
+      font-size: 13px;
+      color: var(--text-tertiary);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    /* ========== FEATURES ========== */
+    .features {
+      padding: 140px 64px;
+    }
+
+    .features-header {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto 100px;
+    }
+
+    .features-title {
+      font-size: clamp(36px, 4vw, 56px);
+      font-weight: 800;
+      letter-spacing: -1.5px;
+      line-height: 1.1;
+    }
+
+    .features-title .accent {
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .features-intro {
+      font-size: 15px;
+      line-height: 1.8;
+      color: var(--text-secondary);
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .feat-card {
+      background: var(--surface);
+      padding: 48px;
+      transition: background 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feat-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .feat-card:hover { background: rgba(13,13,18,0.6); }
+    .feat-card:hover::before { opacity: 1; }
+
+    .feat-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 24px;
+      font-size: 20px;
+    }
+
+    .feat-card h3 {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      letter-spacing: -0.2px;
+    }
+
+    .feat-card p {
+      font-size: 14px;
+      line-height: 1.7;
+      color: var(--text-secondary);
+    }
+
+    /* ========== CTA ========== */
+    .cta-section {
+      padding: 140px 64px;
+      text-align: center;
+      position: relative;
+    }
+
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 60% 60% at 50% 100%, rgba(59,130,246,0.1) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .cta-section h2 {
+      font-size: clamp(36px, 5vw, 72px);
+      font-weight: 900;
+      letter-spacing: -2px;
+      max-width: 700px;
+      margin: 0 auto 20px;
+    }
+
+    .cta-section h2 .accent {
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .cta-section p {
+      font-size: 18px;
+      color: var(--text-secondary);
+      margin-bottom: 48px;
+    }
+
+    .cta-form {
+      display: flex;
+      gap: 0;
+      max-width: 480px;
+      margin: 0 auto;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .cta-input {
+      flex: 1;
+      padding: 16px 20px;
+      background: var(--surface);
+      border: none;
+      color: var(--text-primary);
+      font-size: 14px;
+      font-family: 'Inter', sans-serif;
+      outline: none;
+    }
+
+    .cta-input::placeholder { color: var(--text-tertiary); }
+
+    .cta-submit {
+      padding: 16px 32px;
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      font-size: 14px;
+      font-weight: 600;
+      font-family: 'Inter', sans-serif;
+      cursor: pointer;
+      transition: background 0.3s;
+      white-space: nowrap;
+    }
+
+    .cta-submit:hover { background: var(--accent-bright); }
+
+    /* ========== FOOTER ========== */
+    footer {
+      padding: 48px 64px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid var(--border);
+    }
+
+    .footer-logo {
+      font-size: 16px;
+      font-weight: 800;
+      letter-spacing: -0.3px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .footer-logo::before {
+      content: '';
+      width: 20px;
+      height: 20px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      border-radius: 6px;
+    }
+
+    .footer-copy {
+      font-size: 13px;
+      color: var(--text-tertiary);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 28px;
+    }
+
+    .footer-links a {
+      font-size: 13px;
+      color: var(--text-tertiary);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .footer-links a:hover { color: var(--text-secondary); }
+
+    /* ========== RESPONSIVE ========== */
+    @media (max-width: 900px) {
+      nav { padding: 20px 28px; }
+      .nav-links { display: none; }
+      .hero { padding: 120px 28px 60px; }
+      .workflow { padding: 80px 28px; }
+      .workflow-steps { grid-template-columns: 1fr; }
+      .step-arrow { display: none; }
+      .stats { padding: 60px 28px; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 32px; }
+      .features { padding: 80px 28px; }
+      .features-header { grid-template-columns: 1fr; gap: 24px; }
+      .features-grid { grid-template-columns: 1fr; }
+      .cta-section { padding: 80px 28px; }
+      .cta-form { flex-direction: column; border-radius: 10px; }
+      .cta-input { border-radius: 10px 10px 0 0; }
+      .cta-submit { border-radius: 0 0 10px 10px; }
+      footer { flex-direction: column; gap: 24px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav>
+    <a href="#" class="nav-logo">织网</a>
+    <div class="nav-links">
+      <a href="#workflow">工作流</a>
+      <a href="#features">优势</a>
+      <a href="#stats">数据</a>
+      <a href="#cta" class="nav-cta">开始使用</a>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-badge" data-aos="fade-up">AI 驱动 · 秒级生成 · 全球部署</div>
+    <h1 data-aos="fade-up" data-aos-delay="100">
+      <span class="accent">AI 建站</span><br>
+      <span class="light">让想法，秒变网站</span>
+    </h1>
+    <p data-aos="fade-up" data-aos-delay="200">
+      只需描述你的需求，我们的 AI 在几秒内为你生成专业网站。
+      无需设计经验，无需写代码，直接上线。
+    </p>
+    <div class="hero-actions" data-aos="fade-up" data-aos-delay="300">
+      <a href="#cta" class="btn-primary">免费开始 →</a>
+      <a href="#workflow" class="btn-ghost">了解工作流</a>
+    </div>
+  </section>
+
+  <!-- Workflow -->
+  <section class="workflow" id="workflow">
+    <div class="workflow-label" data-aos="fade-up">工作流</div>
+    <h2 class="workflow-title" data-aos="fade-up" data-aos-delay="100">三步，从零到上线</h2>
+
+    <div class="workflow-steps">
+      <div class="step-card" data-aos="fade-up" data-aos-delay="0">
+        <div class="step-num">STEP 01</div>
+        <div class="step-icon">💬</div>
+        <h3>说出你的想法</h3>
+        <p>用自然语言描述你的需求：「我要一个展示我摄影作品的个人网站」——就这么简单。</p>
+        <div class="step-arrow">→</div>
+      </div>
+      <div class="step-card" data-aos="fade-up" data-aos-delay="150">
+        <div class="step-num">STEP 02</div>
+        <div class="step-icon">⚡</div>
+        <h3>AI 秒级生成</h3>
+        <p>我们的 AI 分析需求，自动选择配色、布局、内容结构。几秒钟，一个完整的网站已就绪。</p>
+        <div class="step-arrow">→</div>
+      </div>
+      <div class="step-card" data-aos="fade-up" data-aos-delay="300">
+        <div class="step-num">STEP 03</div>
+        <div class="step-icon">🚀</div>
+        <h3>一键全球上线</h3>
+        <p>确认设计，AI 自动完成部署。全球 CDN 加速，HTTPS 安全证书，一切自动搞定。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats -->
+  <section class="stats" id="stats">
+    <div class="stats-grid">
+      <div class="stat-item" data-aos="zoom-in" data-aos-delay="0">
+        <h2><span class="countup" data-count="12847">0</span>+</h2>
+        <p>网站已生成</p>
+      </div>
+      <div class="stat-item" data-aos="zoom-in" data-aos-delay="100">
+        <h2><span class="countup" data-count="99">0</span>.9%</h2>
+        <p>服务可用性</p>
+      </div>
+      <div class="stat-item" data-aos="zoom-in" data-aos-delay="200">
+        <h2><span class="countup" data-count="35">0</span>s</h2>
+        <p>平均生成时间</p>
+      </div>
+      <div class="stat-item" data-aos="zoom-in" data-aos-delay="300">
+        <h2><span class="countup" data-count="4">0</span>.9/5</h2>
+        <p>用户满意度</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section class="features" id="features">
+    <div class="features-header">
+      <h2 class="features-title" data-aos="fade-right">
+        为什么<br><span class="accent"> thousands</span><br>选择我们
+      </h2>
+      <p class="features-intro" data-aos="fade-left" data-aos-delay="150">
+        不是模板，不是拖拽——是真正懂你需求的 AI。
+        我们重新定义了「做网站」这件事。
+      </p>
+    </div>
+
+    <div class="features-grid">
+      <div class="feat-card" data-aos="fade-up" data-aos-delay="0">
+        <div class="feat-icon" style="background:rgba(59,130,246,0.1);">🧠</div>
+        <h3>真正理解你的 AI</h3>
+        <p>不只是生成页面——AI 理解你的行业、品牌调性、目标用户，生成匹配你身份的网站。</p>
+      </div>
+      <div class="feat-card" data-aos="fade-up" data-aos-delay="100">
+        <div class="feat-icon" style="background:rgba(139,92,246,0.1);">⚡</div>
+        <h3>35 秒完成一切</h3>
+        <p>从输入需求到全球上线，平均只需 35 秒。传统方式需要几天，我们只要一杯咖啡的时间。</p>
+      </div>
+      <div class="feat-card" data-aos="fade-up" data-aos-delay="200">
+        <div class="feat-icon" style="background:rgba(16,185,129,0.1);">🎨</div>
+        <h3>设计感从不妥协</h3>
+        <p>专业设计师打造的视觉系统，每个网站都有独特的视觉语言，不是千篇一律的模板。</p>
+      </div>
+      <div class="feat-card" data-aos="fade-up" data-aos-delay="300">
+        <div class="feat-icon" style="background:rgba(245,158,11,0.1);">🌐</div>
+        <h3>全球 CDN + HTTPS</h3>
+        <p>自动部署到全球边缘节点，HTTPS 安全证书，性能和安全同时拥有，无需任何配置。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section" id="cta">
+    <h2 data-aos="fade-up">
+      准备好<br><span class="accent">让 AI 为你建站</span>？
+    </h2>
+    <p data-aos="fade-up" data-aos-delay="150">留下邮箱，立刻开始。免费使用，无限额体验。</p>
+    <form class="cta-form" data-aos="fade-up" data-aos-delay="300" onsubmit="return false;">
+      <input type="email" class="cta-input" placeholder="输入你的邮箱地址" aria-label="邮箱">
+      <button type="submit" class="cta-submit">开始 →</button>
+    </form>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-logo">织网</div>
+    <p class="footer-copy">© 2026 织网科技. 保留所有权利。</p>
+    <div class="footer-links">
+      <a href="#">关于</a>
+      <a href="#">隐私</a>
+      <a href="#">条款</a>
+    </div>
+  </footer>
+
+  <!-- AOS JS -->
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+
+  <!-- CountUp JS -->
+  <script src="https://cdn.jsdelivr.net/npm/countup.js@2.6.2/dist/countUp.umd.min.js"></script>
+
+  <script>
+    AOS.init({ duration: 900, easing: 'ease-out-quart', once: true, offset: 40 });
+
+    // CountUp
+    const counters = document.querySelectorAll('.countup[data-count]');
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        const el = entry.target;
+        const target = parseFloat(el.dataset.count);
+        const decimals = String(target).includes('.') ? 1 : 0;
+        const inst = new CountUp(el, target, { duration: 2.5, separator: ',', decimals });
+        if (!inst.error) inst.start();
+        obs.unobserve(el);
+      });
+    }, { threshold: 0.5 });
+    counters.forEach(c => obs.observe(c));
+  </script>
+
+</body>
+</html>
